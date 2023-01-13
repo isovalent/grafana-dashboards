@@ -1,2 +1,3 @@
-# grafana-dashboards
-Grafana dashboards for Cilium
+# Grafana Dashboards
+
+Dashboard configurations for using Grafana with Cilium
