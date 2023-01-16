@@ -963,7 +963,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "query_result(hubble_policy_verdicts_total)",
         "description": "The non-targeted Kubernetes namespace (source for Ingress, destination for Egress)",
@@ -986,7 +986,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "query_result(hubble_policy_verdicts_total)",
         "description": "The non-targeted Kubernetes workload (source for Ingress, destination for Egress)",
