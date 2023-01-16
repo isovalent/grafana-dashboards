@@ -207,7 +207,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{match}}",
           "range": true,
@@ -359,7 +359,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"egress\",source=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"egress\",source_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{match}}",
           "range": true,
@@ -497,7 +497,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{action}}",
           "range": true,
@@ -635,7 +635,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"egress\",source=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"egress\",source_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{action}}",
           "range": true,
@@ -711,10 +711,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (source, destination, match, action) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (source_namespace, source, destination_namespace, destination, match, action) (rate(hubble_policy_verdicts_total{direction=\"ingress\",destination_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "format": "table",
           "instant": true,
-          "legendFormat": "source: {{source}} destination: {{destination}} match: {{match}} action: {{action}}",
+          "legendFormat": "source: {{source_namespace}}/{{source}} destination: {{destination_namespace}}/{{destination}} match: {{match}} action: {{action}}",
           "range": false,
           "refId": "A"
         }
@@ -757,13 +757,18 @@
             },
             "indexByName": {
               "Time": 0,
-              "Value": 5,
-              "action": 4,
-              "destination": 2,
-              "match": 3,
-              "source": 1
+              "Value": 7,
+              "action": 6,
+              "destination": 4,
+              "destination_namespace": 3,
+              "match": 5,
+              "source": 2,
+              "source_namespace": 1
             },
-            "renameByName": {}
+            "renameByName": {
+              "destination_namespace": "destination namespace",
+              "source_namespace": "source namespace"
+            }
           }
         }
       ],
@@ -774,6 +779,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -835,10 +841,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (destination, source, match, action) (rate(hubble_policy_verdicts_total{direction=\"egress\",source=~\"$namespace/.*\"}[$__rate_interval])) * 60",
+          "expr": "sum by (destination_namespace, destination, source_namespace, source, match, action) (rate(hubble_policy_verdicts_total{direction=\"egress\",source_namespace=~\"$namespace\"}[$__rate_interval])) * 60",
           "format": "table",
           "instant": true,
-          "legendFormat": "destination: {{destination}} source: {{source}} match: {{match}} action: {{action}}",
+          "legendFormat": "destination: {{destination_namespace}}/{{destination}} source:  {{source_namespace}}/{{source}} match: {{match}} action: {{action}}",
           "range": false,
           "refId": "A"
         }
@@ -882,13 +888,19 @@
             },
             "indexByName": {
               "Time": 0,
-              "Value": 5,
-              "action": 4,
-              "destination": 1,
-              "match": 3,
-              "source": 2
+              "Value": 7,
+              "action": 6,
+              "destination": 2,
+              "destination_namespace": 1,
+              "match": 5,
+              "source": 4,
+              "source_namespace": 3
             },
-            "renameByName": {}
+            "renameByName": {
+              "Time": "",
+              "destination_namespace": "destination namespace",
+              "source_namespace": "source namespace"
+            }
           }
         }
       ],
@@ -933,6 +945,6 @@
   "timezone": "",
   "title": "Cilium Policy Verdicts",
   "uid": "nLIA2E37k",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
