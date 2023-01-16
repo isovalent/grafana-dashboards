@@ -942,7 +942,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "query_result(hubble_policy_verdicts_total)",
+        "definition": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\"})",
         "description": "The Kubernetes workload the Network Policies apply to",
         "hide": 0,
         "includeAll": true,
@@ -950,7 +950,7 @@
         "name": "workload",
         "options": [],
         "query": {
-          "query": "query_result(hubble_policy_verdicts_total)",
+          "query": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\"})",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -965,7 +965,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "query_result(hubble_policy_verdicts_total)",
+        "definition": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"})",
         "description": "The non-targeted Kubernetes namespace (source for Ingress, destination for Egress)",
         "hide": 0,
         "includeAll": true,
@@ -973,7 +973,7 @@
         "name": "other_namespace",
         "options": [],
         "query": {
-          "query": "query_result(hubble_policy_verdicts_total)",
+          "query": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"})",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -988,7 +988,7 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "query_result(hubble_policy_verdicts_total)",
+        "definition": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"})",
         "description": "The non-targeted Kubernetes workload (source for Ingress, destination for Egress)",
         "hide": 0,
         "includeAll": true,
@@ -997,7 +997,7 @@
         "name": "other_workload",
         "options": [],
         "query": {
-          "query": "query_result(hubble_policy_verdicts_total)",
+          "query": "query_result(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"} OR hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"})",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
