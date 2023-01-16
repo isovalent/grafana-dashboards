@@ -207,7 +207,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$source_namespace\", source=~\"$source\"}[$__rate_interval])) * 60",
+          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$other_namespace\", source=~\"$other_workload\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{match}}",
           "range": true,
@@ -359,7 +359,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$destination_namespace\", destination=~\"$destination\"}[$__rate_interval])) * 60",
+          "expr": "sum by (match) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$other_namespace\", destination=~\"$other_workload\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{match}}",
           "range": true,
@@ -497,7 +497,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$source_namespace\", source=~\"$source\"}[$__rate_interval])) * 60",
+          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$other_namespace\", source=~\"$other_workload\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{action}}",
           "range": true,
@@ -635,7 +635,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$destination_namespace\", destination=~\"$destination\"}[$__rate_interval])) * 60",
+          "expr": "sum by (action) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$other_namespace\", destination=~\"$other_workload\"}[$__rate_interval])) * 60",
           "instant": false,
           "legendFormat": "{{action}}",
           "range": true,
@@ -711,7 +711,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (source_namespace, source, destination_namespace, destination, match, action) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$source_namespace\", source=~\"$source\"}[$__rate_interval])) * 60",
+          "expr": "sum by (source_namespace, source, destination_namespace, destination, match, action) (rate(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\", source_namespace=~\"$other_namespace\", source=~\"$other_workload\"}[$__rate_interval])) * 60",
           "format": "table",
           "instant": true,
           "legendFormat": "source: {{source_namespace}}/{{source}} destination: {{destination_namespace}}/{{destination}} match: {{match}} action: {{action}}",
@@ -841,7 +841,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (destination_namespace, destination, source_namespace, source, match, action) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$destination_namespace\", destination=~\"$destination\"}[$__rate_interval])) * 60",
+          "expr": "sum by (destination_namespace, destination, source_namespace, source, match, action) (rate(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\", destination_namespace=~\"$other_namespace\", destination=~\"$other_workload\"}[$__rate_interval])) * 60",
           "format": "table",
           "instant": true,
           "legendFormat": "destination: {{destination_namespace}}/{{destination}} source:  {{source_namespace}}/{{source}} match: {{match}} action: {{action}}",
@@ -937,7 +937,19 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "query_result(hubble_policy_verdicts_total)",
         "description": "The Kubernetes workload the Network Policies apply to",
         "hide": 0,
@@ -956,81 +968,60 @@
         "type": "query"
       },
       {
-        "current": {},
-        "definition": "label_values(hubble_policy_verdicts_total, source_namespace)",
-        "description": "The source Kubernetes namespace of the Ingress Network Policies",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "query_result(hubble_policy_verdicts_total)",
+        "description": "The non-targeted Kubernetes namespace (source for Ingress, destination for Egress)",
         "hide": 0,
         "includeAll": true,
-        "label": "source namespace",
         "multi": true,
-        "name": "source_namespace",
+        "name": "other_namespace",
         "options": [],
         "query": {
-          "query": "label_values(hubble_policy_verdicts_total, source_namespace)",
+          "query": "query_result(hubble_policy_verdicts_total)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "",
+        "regex": "/.*namespace=\"([^\"]+)\".*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
       },
       {
-        "current": {},
-        "definition": "label_values(hubble_policy_verdicts_total, source)",
-        "description": "The source Kubernetes workload of the Ingress Network Policies",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "query_result(hubble_policy_verdicts_total)",
+        "description": "The non-targeted Kubernetes workload (source for Ingress, destination for Egress)",
         "hide": 0,
         "includeAll": true,
-        "label": "source workload",
+        "label": "other workload",
         "multi": true,
-        "name": "source",
+        "name": "other_workload",
         "options": [],
         "query": {
-          "query": "label_values(hubble_policy_verdicts_total, source)",
+          "query": "query_result(hubble_policy_verdicts_total)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "definition": "label_values(hubble_policy_verdicts_total, destination_namespace)",
-        "description": "The destination Kubernetes namespace of the Egress Network Policies",
-        "hide": 0,
-        "includeAll": true,
-        "label": "destination namespace",
-        "multi": true,
-        "name": "destination_namespace",
-        "options": [],
-        "query": {
-          "query": "label_values(hubble_policy_verdicts_total, destination_namespace)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "definition": "label_values(hubble_policy_verdicts_total, destination)",
-        "description": "The destination Kubernetes workload of the Egress Network Policies",
-        "hide": 0,
-        "includeAll": true,
-        "label": "destination workload",
-        "multi": true,
-        "name": "destination",
-        "options": [],
-        "query": {
-          "query": "label_values(hubble_policy_verdicts_total, destination)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
+        "regex": "/.*(?:source|destination)=\"([^\"]+)\".*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
