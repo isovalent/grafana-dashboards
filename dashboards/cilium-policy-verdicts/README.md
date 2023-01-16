@@ -28,14 +28,14 @@ for example using Helm values:
 ```yaml
 hubble:
   metrics:
-    enabled: "{dns,drop,tcp,flow,port-distribution,icmp,http,policy:sourceContext=pod-short|reserved-identity;destinationContext=pod-short|dns|reserved
+    enabled: "{dns,drop,tcp,flow,port-distribution,icmp,http,policy:sourceContext=app|workload-name|pod|reserved-identity;destinationContext=app|workload-name|pod|dns|reserved
 -identity}"
 ```
 
 This example will enable `dns`, `drop`, `tcp`, `port-distribution`, `icmp`,
 `http`, and `policy` metrics. Additionally, it will configure the labels for
 the `policy` metric series to use:
-- `pod-short` or `reserved-identity` for source flows
-- `pod-short`, `dns`, or `reserved-identity` for destination flows
+- `app`, `workload-name`, `pod` or `reserved-identity` for source flows
+- `app`, `workload-name`, `pod`, `dns`, or `reserved-identity` for destination flows
 
 The present Grafana dashboard is optimized for this context configuration (see [documentation](https://docs.cilium.io/en/stable/operations/metrics/#context-options)).
