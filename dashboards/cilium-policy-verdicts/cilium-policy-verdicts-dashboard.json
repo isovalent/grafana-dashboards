@@ -937,17 +937,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "client",
-            "server"
-          ],
-          "value": [
-            "client",
-            "server"
-          ]
-        },
+        "current": {},
         "definition": "query_result(hubble_policy_verdicts_total)",
         "description": "The Kubernetes workload the Network Policies apply to",
         "hide": 0,
@@ -966,15 +956,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "my-app"
-          ],
-          "value": [
-            "my-app"
-          ]
-        },
+        "current": {},
         "definition": "label_values(hubble_policy_verdicts_total, source_namespace)",
         "description": "The source Kubernetes namespace of the Ingress Network Policies",
         "hide": 0,
@@ -994,15 +976,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "test"
-          ],
-          "value": [
-            "test"
-          ]
-        },
+        "current": {},
         "definition": "label_values(hubble_policy_verdicts_total, source)",
         "description": "The source Kubernetes workload of the Ingress Network Policies",
         "hide": 0,
@@ -1022,15 +996,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
+        "current": {},
         "definition": "label_values(hubble_policy_verdicts_total, destination_namespace)",
         "description": "The destination Kubernetes namespace of the Egress Network Policies",
         "hide": 0,
@@ -1050,15 +1016,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "kube-dns"
-          ],
-          "value": [
-            "kube-dns"
-          ]
-        },
+        "current": {},
         "definition": "label_values(hubble_policy_verdicts_total, destination)",
         "description": "The destination Kubernetes workload of the Egress Network Policies",
         "hide": 0,
