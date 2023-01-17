@@ -28,11 +28,12 @@ for example using Helm values:
 ```yaml
 hubble:
   metrics:
-    enabled: "{dns,drop,tcp,flow,port-distribution,icmp,http,policy:sourceContext=app|workload-name|pod|reserved-identity;destinationContext=app|workload-name|pod|dns|reserved-identity;labelContext=source_namespace;destination_namespace}"
+    enabled:
+      - policy:sourceContext=app|workload-name|pod|reserved-identity;destinationContext=app|workload-name|pod|dns|reserved-identity;labelContext=source_namespace;destination_namespace
 ```
 
-This example will enable `dns`, `drop`, `tcp`, `port-distribution`, `icmp`,
-`http`, and `policy` metrics. Additionally, it will configure the labels for
+This example will enable `policy` metrics (you can add [more metrics](https://docs.cilium.io/en/v1.12/operations/metrics/#hubble-exported-metrics) to that list).
+Additionally, it will configure the labels for
 the `policy` metric series to use:
 - `app`, `workload-name`, `pod` or `reserved-identity` for source flows
 - `app`, `workload-name`, `pod`, `dns`, or `reserved-identity` for destination flows
