@@ -965,20 +965,20 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "query_result(label_replace(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"}, \"other_namespace|\", \"$1\", \"source_namespace\", \"(.+)\") OR label_replace(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"}, \"other_namespace|\", \"$1\", \"destination_namespace\", \"(.+)\"))",
+        "definition": "query_result(label_replace(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"}, \"other_namespace\", \"$1\", \"source_namespace\", \"(.+)\") OR label_replace(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"}, \"other_namespace\", \"$1\", \"destination_namespace\", \"(.+)\"))",
         "description": "The non-targeted Kubernetes namespace (source for Ingress, destination for Egress)",
         "hide": 0,
         "includeAll": true,
         "label": "other namespace",
         "multi": true,
-        "name": "other_namespace|",
+        "name": "other_namespace",
         "options": [],
         "query": {
-          "query": "query_result(label_replace(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"}, \"other_namespace|\", \"$1\", \"source_namespace\", \"(.+)\") OR label_replace(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"}, \"other_namespace|\", \"$1\", \"destination_namespace\", \"(.+)\"))",
+          "query": "query_result(label_replace(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\", destination=~\"$workload\"}, \"other_namespace\", \"$1\", \"source_namespace\", \"(.+)\") OR label_replace(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\", source=~\"$workload\"}, \"other_namespace\", \"$1\", \"destination_namespace\", \"(.+)\"))",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*other_namespace|=\"([^\"]+)\".*/",
+        "regex": "/.*other_namespace=\"([^\"]+)\".*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
