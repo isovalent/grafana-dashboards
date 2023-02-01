@@ -137,6 +137,21 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "l3-only"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "l3-l4"
             },
             "properties": [
@@ -280,6 +295,21 @@
                 "id": "color",
                 "value": {
                   "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "l3-only"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
                   "mode": "fixed"
                 }
               }
