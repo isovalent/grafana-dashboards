@@ -29,7 +29,7 @@ for example using Helm values:
 hubble:
   metrics:
     enabled:
-      - policy:sourceContext=app|workload-name|pod|reserved-identity;destinationContext=app|workload-name|pod|dns|reserved-identity;labelContext=source_namespace;destination_namespace
+      - "policy:sourceContext=app|workload-name|pod|reserved-identity;destinationContext=app|workload-name|pod|dns|reserved-identity;labelsContext=source_namespace,destination_namespace"
 ```
 
 This example will enable `policy` metrics (you can add [more metrics](https://docs.cilium.io/en/v1.12/operations/metrics/#hubble-exported-metrics) to that list).
