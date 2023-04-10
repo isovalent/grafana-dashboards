@@ -970,7 +970,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "query_result(label_replace(hubble_policy_verdicts_total{direction=\"ingress\", destination_namespace=~\"$namespace\"}, \"workload\", \"$1\", \"destination\", \"(.+)\") OR label_replace(hubble_policy_verdicts_total{direction=\"egress\", source_namespace=~\"$namespace\"}, \"workload\", \"$1\", \"source\", \"(.+)\"))",
         "description": "The Kubernetes workload the Network Policies apply to",
